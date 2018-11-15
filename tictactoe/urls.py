@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from .views import welcome
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('welcome', welcome),
-    url(r'^$', welcome)
+    url(r'^$', welcome),
+    url(r'^player/', include('player.urls'))
 ]
