@@ -8,7 +8,7 @@
             <h3>Active games</h3>
             <ul class="list-group">
                 {% for g in games %}
-                    <a class="list-group-item" href="{{ g.get-absolute_url }}">
+                    <a class="list-group-item" href="{{ g.get_absolute_url }}">
                         {{ g.first_player }} vs {{ g.second_player }}
                     </a>
                 {% endfor %}

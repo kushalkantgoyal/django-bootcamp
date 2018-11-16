@@ -10,6 +10,7 @@ GAME_STATUS_COICES = (
     ('L', "Second Player Wins"),
     ('D', "Draw")
 )
+BOARD_SIZE=3
 
 class GamesQuerySet(models.QuerySet):
     def games_of_user(self, user):
@@ -32,6 +33,17 @@ class Game(models.Model):
 
     objects = GamesQuerySet.as_manager()
 
+    def board(self):
+        """Return a 2-dimensional list of Move objects"""
+        board = [[None for x in range(BOARD_SIZE)] for y in range(BOARD_SIZE)]
+        for move in self.move_set.all():
+            board[move.y][move.x] = move
+        return board
+
+    def is_users_move(self, user):
+        return (user == self.first_player and self.status == "F") or \
+               (user == self.second_player and self.status == "S")
+
     def get_absolute_url(self):
         return reverse('gameplay_detail', args=[self.id])
 
@@ -43,6 +55,6 @@ class Move(models.Model):
     x = models.IntegerField()
     y = models.IntegerField()
     comment = models.CharField(max_length=300, blank=True)
-    by_first_player = models.BooleanField()
+    by_first_player = models.BooleanField(editable=False)
 
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, editable=False ,on_delete=models.CASCADE)
