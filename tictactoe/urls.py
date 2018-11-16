@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('welcome', welcome),
     url(r'^$', welcome, name="tictactoe_welcome"),
-    url(r'^player/', include('player.urls'))
+    url(r'^player/', include('player.urls')),
+    url(r'^games/', include('gameplay.urls')),
 ]
 
 

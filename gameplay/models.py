@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse
 
 GAME_STATUS_COICES = (
     ('F', "First Player to Move"),
@@ -30,6 +31,9 @@ class Game(models.Model):
     status = models.CharField(max_length=1, default='F', choices=GAME_STATUS_COICES)
 
     objects = GamesQuerySet.as_manager()
+
+    def get_absolute_url(self):
+        return reverse('gameplay_detail', args=[self.id])
 
     def __str__(self):
         return "{0} vs {1}".format(
