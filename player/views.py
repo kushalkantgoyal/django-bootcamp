@@ -16,7 +16,7 @@ def home(request):
     invitations = request.user.invitations_received.all()
 
     return render(request, "player/home.html",
-                  {'games': active_games,
+                  {'active_games': active_games,
                    'finished_games': finished_games,
                    'invitations': invitations})
 
